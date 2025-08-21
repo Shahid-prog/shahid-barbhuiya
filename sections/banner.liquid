@@ -1,0 +1,126 @@
+<section id="Banner-{{ section.id }}" class="banner-container">
+  <style>
+    #Banner-{{ section.id }} {
+      padding: 40px 16px;
+      text-align: center;
+    }
+    #Banner-{{ section.id }} .banner-top {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    #Banner-{{ section.id }} .banner-top span {
+      display: block;
+    }
+    #Banner-{{ section.id }} .banner-top button,
+    #Banner-{{ section.id }} .banner-top a.button {
+      display: inline-block;
+      padding: 12px 20px;
+      background: #111;
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+    #Banner-{{ section.id }} .banner-center img {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-width: 1200px;
+      margin: 0 auto 24px;
+    }
+    #Banner-{{ section.id }} .banner-bottom {
+      font-size: 14px;
+      letter-spacing: .04em;
+    }
+    /* Keep original class hooks (empty by default) */
+    #Banner-{{ section.id }} .banner-contaner {}
+    #Banner-{{ section.id }} .banner-top {}
+    #Banner-{{ section.id }} .banner-center {}
+    #Banner-{{ section.id }} .banner-bottom {}
+  </style>
+
+  <div class="banner-top">
+    {% if section.settings.title != blank %}
+      <div><span>{{ section.settings.title | escape }}</span></div>
+    {% endif %}
+
+    {% if section.settings.subtitle != blank %}
+      <div><span>{{ section.settings.subtitle | escape }}</span></div>
+    {% endif %}
+
+    {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+      <div>
+        <a class="button" href="{{ section.settings.button_link }}">
+          {{ section.settings.button_label | escape }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="banner-center">
+    {% if section.settings.image %}
+      <div>
+        <img
+          src="{{ section.settings.image | image_url: width: 1500 }}"
+          alt="{{ section.settings.image.alt | escape }}"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          loading="lazy">
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="banner-bottom">
+    {% if section.settings.bottom_text != blank %}
+      <span>{{ section.settings.bottom_text | escape }}</span>
+    {% endif %}
+  </div>
+
+  {% schema %}
+  {
+    "name": "Banner",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "TISSO VISION"
+      },
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subtitle",
+        "default": "Find the ideal gift for your loved ones"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Banner image"
+      },
+      {
+        "type": "text",
+        "id": "bottom_text",
+        "label": "Bottom text",
+        "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button label",
+        "default": "CHOOSE GIFT"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button link"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Banner"
+      }
+    ]
+  }
+  {% endschema %}
+</section>
