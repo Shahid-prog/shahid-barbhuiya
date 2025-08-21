@@ -5,35 +5,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
     }
-    #Grid-{{ section.id }} .grid-item{
-        width: 433px;
-        height: 444px;
-    }
-    #Grid-{{ section.id }} .grid-item a {
-        width: 100%;
-        min-height:100%;
-        display: block;
-        text-decoration: none;
-        color: inherit;
-    }
-    #Grid-{{ section.id }} .card-media {
-      position: relative;
-      background: #f6f6f6;
-    }
-    #Grid-{{ section.id }} .card-media img {
-      object-fit: cover;
-      display: block;
-    }
-    /* Optional: simple responsive tweak */
-    @media (max-width: 990px) {
-      #Grid-{{ section.id }} .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    @media (max-width: 600px) {
-      #Grid-{{ section.id }} .grid {
-        grid-template-columns: 1fr;
-      }
+   
     }
   </style>
 
@@ -41,7 +13,7 @@
     {%- for block in section.blocks -%}
       {%- assign product = block.settings.product -%}
       {%- if product -%}
-        <div class="grid-item" {{ block.shopify_attributes }}>
+        <div class="grid-item">
           <a href="{{ product.url }}">
             <div class="card-media">
               {%- if product.featured_image -%}
