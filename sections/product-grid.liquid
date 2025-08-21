@@ -1,27 +1,35 @@
 <section id="Grid-{{ section.id }}" class="product-grid-section">
   <style>
+     #Grid-{{ section.id }}{
+        width:1440px;
+        height:878px;
+        padding-top:90px;
+        padding-left:51.5px;
+        padding-right:51.5px;
+        padding-bottom:51px;
+     }
      #Grid-{{ section.id }} .grid {
-      width: 1339px;
-      height: 908px;
-      display: grid;
-      grid-template-columns: repeat(3, 433px);
-      gap: 20px;
+        width: 1339px;
+        height: 908px;
+        display: grid;
+        grid-template-columns: repeat(3, 433px);
+        gap: 20px;
     }
     #Grid-{{ section.id }} .grid-item {
-      width: 433px;
-      height: 444px;
+        width: 433px;
+        height: 444px;
     }
     #Grid-{{ section.id }} .card-media {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #f6f6f6;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #f6f6f6;
     }
     #Grid-{{ section.id }} .card-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
     }
   </style>
   <div class="title"><span>Tisso vison in the wild</span></div>
