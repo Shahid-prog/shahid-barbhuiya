@@ -37,11 +37,11 @@
     }
   </style>
   <div class="title"><span>Tisso vison in the wild</span></div>
-  <div class="grid">
+  <div class="grid" \>
     {%- for block in section.blocks -%}
       {%- assign product = block.settings.product -%}
       {%- if product -%}
-        <div class="grid-item">
+        <div class="grid-item" data-product-id="{{ product.id }}">
           <a href="{{ product.url }}">
             <div class="card-media">
               {%- if product.featured_image -%}
@@ -57,6 +57,44 @@
         </div>
 
         {% render 'product-modal', product: product %}
+
+        {% comment %}
+            1.Adds a data-product-id attribute to identify the grid item
+            2.Prevents the default link behavior when clicking the grid item
+            3.Opens the corresponding modal instead
+            4.Handles closing the modal via overlay click, close button, or Escape key
+            5.Uses an IIFE (Immediately Invoked Function Expression) to avoid global scope pollution
+        {% endcomment %}
+        <script>
+            (function() {
+                // Find the grid item and modal for this product
+                var gridItem = document.querySelector('[data-product-id="{{ product.id }}"]');
+                var modal = document.getElementById('product-modal-{{ product.id }}');
+                
+                if (!gridItem || !modal) return;
+                
+                // Prevent default link behavior and open modal instead
+                gridItem.addEventListener('click', function(e) {
+                e.preventDefault();
+                modal.classList.add('is-open');
+                });
+                
+                // Close modal when clicking overlay or close button
+                modal.addEventListener('click', function(e) {
+                if (e.target.classList.contains('overlay') || e.target.hasAttribute('data-close')) {
+                    e.preventDefault();
+                    modal.classList.remove('is-open');
+                }
+                });
+                
+                // Close modal with Escape key
+                document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+                    modal.classList.remove('is-open');
+                }
+                });
+            })();
+            </script>
       {%- endif -%}
     {%- endfor -%}
   </div>
