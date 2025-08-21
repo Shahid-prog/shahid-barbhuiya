@@ -73,14 +73,13 @@
 }
 #{{ _modal_id }} .top {
     display: flex;
-    gap: 16px;
+    gap: 8px;
     margin-bottom: 12px;
+    width: 100%;
+    height: 140px;
 }
 #{{ _modal_id }} .thumb {
-    flex: 0 0 96px;
     min-width: 120px;
-    height: 140px;
-    border-radius: 4px;
     overflow: hidden;
     background: #f2f2f2;
 }
@@ -91,11 +90,16 @@
     display: block;
 }
 #{{ _modal_id }} .title {
-    margin: 0 0 6px;
+    margin-top:4px;
+    margin-bottom:20px;
+    font-family: "Jost";
+    font-weight: 300;
     font-size: 16px;
+    line-height: 120%;
+    letter-spacing: 0px;
 }
 #{{ _modal_id }} .price {
-    margin: 0 0 8px;
+    margin-bottom:12px;
     font-weight: 600;
 }
 #{{ _modal_id }} .compare {
@@ -104,9 +108,16 @@
     opacity: .7;
 }
 #{{ _modal_id }} .desc {
+    width: 100%;
+    height: 60px;
     margin: 0;
     font-size: 13px;
     color: #444;
+    font-family: Jost;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 110.00000000000001%;
+
 }
 
   /* Color segmented buttons with vertical swatch */
