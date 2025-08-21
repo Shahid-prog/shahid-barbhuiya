@@ -152,11 +152,23 @@
 
   <div class="banner-center">
     <div class="banner-info">
-      <div class="title">The Gift Guide</div>
-      <div class="description">Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.</div>
+      <div class="title">T
+        {% if section.settings.banner_title != blank %}
+          {{ section.settings.banner_title }}
+        {% endif %}
+      </div>
+      <div class="description">
+        {% if section.settings.banner_description != blank %}
+          {{ section.settings.banner_description }}
+        {% endif %}
+      </div>
       <div>
         <a class="button" href="">
-          <span class="label">Shop Now</span>
+          <span class="label">
+            {% if section.settings.banner_button_label != blank %}
+              {{ section.settings.banner_button_label }}
+            {% endif %}
+          </span>
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="13" viewBox="0 0 28 13" fill="none">
             <path d="M1.11108 5.74402L0.361084 5.74402L0.361084 7.24402L1.11108 7.24402L1.11108 5.74402ZM27.1487 7.02435C27.4416 6.73146 27.4416 6.25658 27.1487 5.96369L22.3757 1.19072C22.0828 0.897826 21.6079 0.897826 21.315 1.19072C21.0221 1.48361 21.0221 1.95849 21.315 2.25138L25.5577 6.49402L21.315 10.7367C21.0221 11.0296 21.0221 11.5044 21.315 11.7973C21.6079 12.0902 22.0828 12.0902 22.3757 11.7973L27.1487 7.02435ZM1.11108 7.24402L26.6183 7.24402L26.6183 5.74402L1.11108 5.74402L1.11108 7.24402Z" fill="white"/>
           </svg>
@@ -193,6 +205,24 @@
       },
       {
         "type": "text",
+        "id": "banner_title",
+        "label": "Banner title",
+        "default": "The Gift Guide"
+      },
+      {
+        "type": "text",
+        "id": "banner_description",
+        "label": "Banner description",
+        "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
+      },
+      {
+        "type": "text",
+        "id": "banner_button_label",
+        "label": "Banner button label",
+        "default": "Shop Now"
+      },
+      {
+        "type": "text",
         "id": "bottom_text",
         "label": "Bottom text",
         "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
@@ -200,7 +230,7 @@
       {
         "type": "text",
         "id": "button_label",
-        "label": "Button label",
+        "label": "Top Button label",
         "default": "CHOOSE GIFT"
       },
       {
