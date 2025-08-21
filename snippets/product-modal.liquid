@@ -18,9 +18,11 @@
 {%- assign size_values = blank -%}
 {%- for opt in product.options_with_values -%}
   {%- assign nm = opt.name | downcase -%}
-  {%- if color_index == -1 and (nm contains 'color' or nm contains 'colour') -%}
-    {%- assign color_index = forloop.index0 -%}
-    {%- assign color_values = opt.values -%}
+  {%- if color_index == -1 -%}
+    {%- if nm contains 'color' or nm contains 'colour' -%}
+        {%- assign color_index = forloop.index0 -%}
+        {%- assign color_values = opt.values -%}
+    {%- endif -%}
   {%- endif -%}
   {%- if size_index == -1 and (nm contains 'size') -%}
     {%- assign size_index = forloop.index0 -%}
