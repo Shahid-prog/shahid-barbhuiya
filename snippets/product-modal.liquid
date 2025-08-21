@@ -24,7 +24,7 @@
         {%- assign color_values = opt.values -%}
     {%- endif -%}
   {%- endif -%}
-  {%- if size_index == -1 and (nm contains 'size') -%}
+  {%- if size_index == -1 and nm contains 'size' -%}
     {%- assign size_index = forloop.index0 -%}
     {%- assign size_values = opt.values -%}
   {%- endif -%}
