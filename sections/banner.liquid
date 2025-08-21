@@ -87,7 +87,7 @@
     {% if section.settings.image %}
       <div>
         <img
-          src="{{ section.settings.image | image_url: width: 1500 }}"
+          src="{{ section.settings.image | image_url }}"
           alt="{{ section.settings.image.alt | escape }}"
           loading="lazy">
       </div>
