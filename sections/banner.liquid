@@ -1,6 +1,6 @@
 <section id="Banner-{{ section.id }}" class="banner-container">
   <style>
-    #Banner-{{ section.id }} {
+   /* #Banner-{{ section.id }} {
       padding: 40px 16px;
       text-align: center;
     }
@@ -32,12 +32,31 @@
     #Banner-{{ section.id }} .banner-bottom {
       font-size: 14px;
       letter-spacing: .04em;
-    }
+    }*/
     /* Keep original class hooks (empty by default) */
-    #Banner-{{ section.id }} .banner-contaner {}
-    #Banner-{{ section.id }} .banner-top {}
-    #Banner-{{ section.id }} .banner-center {}
-    #Banner-{{ section.id }} .banner-bottom {}
+    #Banner-{{ section.id }} .banner-container {
+        width:90rem;
+        height:54.875rem;
+        display:flex;
+        flex-direction:column;
+    }
+    #Banner-{{ section.id }} .banner-top {
+        height:4rem;
+        display:flex;
+        padding: 0.625rem 3.125rem;
+        justify-content:space-between;
+        align-items:center;
+    }
+    #Banner-{{ section.id }} .banner-center {
+        height:48.75rem;
+    }
+    #Banner-{{ section.id }} .banner-bottom {
+        height:2.125rem;
+        display:flex;
+        padding:padding: 0.625rem 3.125rem;
+        justify-content:center;
+        align-items:center;
+    }
   </style>
 
   <div class="banner-top">
