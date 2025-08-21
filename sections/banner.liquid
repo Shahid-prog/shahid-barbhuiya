@@ -52,8 +52,11 @@
   </style>
 
   <div class="banner-top">
-    {% if section.settings.title != blank %}
-      <div><span>{{ section.settings.title | escape }}</span></div>
+    {% if section.settings.logo %}
+        <img
+          src="{{ section.settings.logo | image_url }}"
+          alt="{{ section.settings.logo.alt | escape }}"
+          loading="lazy">
     {% endif %}
 
     {% if section.settings.subtitle != blank %}
