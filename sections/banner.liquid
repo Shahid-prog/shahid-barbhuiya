@@ -79,6 +79,8 @@
       position:absolute;
       top: 425px;
       left: 67px;
+      display:flex;
+      flex-direction:column;
     }
     #Banner-{{ section.id }} .banner-center .banner-info .description{
         width: 483px;
@@ -88,6 +90,15 @@
         font-style: normal;
         font-size: 20px;
         line-height: 140%;
+        letter-spacing: 0px;
+    }
+    #Banner-{{ section.id }} .banner-center .banner-info .title{
+        width: 459px;
+        height: 70px;
+        font-family: "Jost";
+        font-weight: 500;
+        font-size: 70px;
+        line-height: 100%;
         letter-spacing: 0px;
     }
   </style>
@@ -118,12 +129,6 @@
   </div>
 
   <div class="banner-center">
-    {%  comment %}{% if section.settings.image %}
-        <img
-          src="{{ section.settings.image | image_url }}"
-          alt="{{ section.settings.image.alt | escape }}"
-          loading="lazy">
-    {% endif %}{% endcomment %}
     <div class="banner-info">
       <div class="title">The Gift Guide</div>
       <div class="description">Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.</div>
