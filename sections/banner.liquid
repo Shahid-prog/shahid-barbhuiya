@@ -19,7 +19,7 @@
         width:100%;
         min-height:780px;
         position:relative;
-        background-image:url({{ section.settings.logo | image_url }});
+        background-image:url({% if section.settings.image %}{{ section.settings.logo | image_url }}{% endif %});
     }
     #Banner-{{ section.id }} .banner-bottom {
         width:100%;
@@ -118,12 +118,12 @@
   </div>
 
   <div class="banner-center">
-    {% if section.settings.image %}
+    {%  comment %}{% if section.settings.image %}
         <img
           src="{{ section.settings.image | image_url }}"
           alt="{{ section.settings.image.alt | escape }}"
           loading="lazy">
-    {% endif %}
+    {% endif %}{% endcomment %}
     <div class="banner-info">
       <div class="title">The Gift Guide</div>
       <div class="description">Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.</div>
