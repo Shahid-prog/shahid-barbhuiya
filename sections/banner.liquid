@@ -41,6 +41,14 @@
         line-height: 13.42px;
         letter-spacing: 0px;
     }
+    #Banner-{{ section.id }} .banner-top .banner-bottom-text{
+        font-family: "Jost", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 16px;
+        line-height: 13.42px;
+        letter-spacing: 0px;
+    }
   </style>
 
   <div class="banner-top">
@@ -72,7 +80,7 @@
 
   <div class="banner-bottom">
     {% if section.settings.bottom_text != blank %}
-      <span>{{ section.settings.bottom_text | escape }}</span>
+      <span class="banner-bottom-text">{{ section.settings.bottom_text | escape }}</span>
     {% endif %}
   </div>
 
