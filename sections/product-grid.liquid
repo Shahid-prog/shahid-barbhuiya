@@ -23,30 +23,6 @@
       object-fit: cover;
       display: block;
     }
-    #Grid-{{ section.id }} .card-info {
-      margin-top: 10px;
-      display: grid;
-      gap: 6px;
-    }
-    #Grid-{{ section.id }} .card-title {
-      margin: 0;
-      font-size: 16px;
-      line-height: 1.4;
-    }
-    #Grid-{{ section.id }} .card-price {
-      display: flex;
-      gap: 8px;
-      align-items: baseline;
-      font-size: 14px;
-    }
-    #Grid-{{ section.id }} .price--sale {
-      color: #d12727;
-      font-weight: 600;
-    }
-    #Grid-{{ section.id }} .price--compare {
-      text-decoration: line-through;
-      opacity: 0.7;
-    }
     /* Optional: simple responsive tweak */
     @media (max-width: 990px) {
       #Grid-{{ section.id }} .grid {
@@ -78,17 +54,6 @@
                 {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
               {%- endif -%}
             </div>
-            {% comment %} <div class="card-info">
-              <h3 class="card-title">{{ product.title }}</h3>
-              <div class="card-price">
-                {%- if product.compare_at_price > product.price -%}
-                  <span class="price price--sale">{{ product.price | money }}</span>
-                  <span class="price price--compare">{{ product.compare_at_price | money }}</span>
-                {%- else -%}
-                  <span class="price">{{ product.price | money }}</span>
-                {%- endif -%}
-              </div>
-            </div> {% endcomment %}
           </a>
         </div>
       {%- endif -%}
