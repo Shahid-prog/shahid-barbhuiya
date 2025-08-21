@@ -189,6 +189,10 @@
     cursor: pointer;
 }
 
+.no-disp {
+    display:none;
+}
+
 @media (max-width: 560px) {
     #{{ _modal_id }} .dialog {
         margin: 32px auto;
@@ -196,7 +200,7 @@
 }
 </style>
 
-<div class="modal" id="{{ _modal_id }}">
+<div class="modal no-disp" id="{{ _modal_id }}">
   <div class="overlay" data-close></div>
   <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="{{ _modal_id }}-title">
     <button class="close" type="button" aria-label="Close" data-close>✕</button>
