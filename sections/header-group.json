@@ -63,15 +63,70 @@
         "logo": "shopify://shop_images/tisso-logo.png",
         "subtitle": "Find the ideal gift for your loved ones",
         "image": "shopify://shop_images/hero-image.png",
+        "banner_title": "The Gift Guide",
+        "banner_description": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+        "banner_button_label": "Shop Now",
         "bottom_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL",
         "button_label": "CHOOSE GIFT",
         "button_link": ""
       }
+    },
+    "product_grid_wrrTYp": {
+      "type": "product-grid",
+      "blocks": {
+        "product_pUxMKp": {
+          "type": "product",
+          "settings": {
+            "product": "blue-silk-tuxedo"
+          }
+        },
+        "product_67Daqd": {
+          "type": "product",
+          "settings": {
+            "product": ""
+          }
+        },
+        "product_xVUBzH": {
+          "type": "product",
+          "settings": {
+            "product": ""
+          }
+        },
+        "product_wHm6nE": {
+          "type": "product",
+          "settings": {
+            "product": ""
+          }
+        },
+        "product_CAf37w": {
+          "type": "product",
+          "settings": {
+            "product": ""
+          }
+        },
+        "product_Wk4Epw": {
+          "type": "product",
+          "settings": {
+            "product": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_pUxMKp",
+        "product_67Daqd",
+        "product_xVUBzH",
+        "product_wHm6nE",
+        "product_CAf37w",
+        "product_Wk4Epw"
+      ],
+      "name": "Product grid",
+      "settings": {}
     }
   },
   "order": [
     "announcement-bar",
     "header",
-    "banner_qLwhfa"
+    "banner_qLwhfa",
+    "product_grid_wrrTYp"
   ]
 }
