@@ -86,12 +86,10 @@
 
   <div class="banner-center">
     {% if section.settings.image %}
-      <div>
         <img
           src="{{ section.settings.image | image_url }}"
           alt="{{ section.settings.image.alt | escape }}"
           loading="lazy">
-      </div>
     {% endif %}
   </div>
 
