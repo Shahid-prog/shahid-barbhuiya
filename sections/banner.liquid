@@ -1,11 +1,14 @@
 <section id="Banner-{{ section.id }}" class="banner-container">
   <style>
+    /* Styles for the overall banner section (container element uses both ID and class) */
     #Banner-{{ section.id }} .banner-container {
         width:1440px;
         height:878px;
         display:flex;
         flex-direction:column;
     }
+
+    /* Top bar: logo, subtitle, and top CTA */
     #Banner-{{ section.id }} .banner-top {
         width:100%;
         height:64px;
@@ -15,12 +18,17 @@
         align-items:center;
         background-color: #F5F5F5;
     }
+
+    /* Center area with background image; overlay content is positioned absolutely */
+    /* Note: If the background image doesn't fit, consider background-size/background-position */
     #Banner-{{ section.id }} .banner-center {
         width:100%;
         min-height:780px;
         position:relative;
         background-image:url({% if section.settings.image %}{{ section.settings.image | image_url }}{% endif %});
     }
+
+    /* Bottom bar with supporting text */
     #Banner-{{ section.id }} .banner-bottom {
         width:100%;
         height:34px;
@@ -31,11 +39,7 @@
         background-color: #F5F5F5;
     }
 
-    #Banner-{{ section.id }} .banner-center img{
-        width:100%;
-        object-fit:cover;
-    }
-
+    /* Typography for the subtitle shown in the top bar */
     #Banner-{{ section.id }} .banner-top .banner-top-text{
         font-family: "Jost", sans-serif;
         font-weight: 400;
@@ -44,6 +48,8 @@
         line-height: 13.42px;
         letter-spacing: 0px;
     }
+
+    /* Typography for the bottom helper text */
     #Banner-{{ section.id }} .banner-bottom .banner-bottom-text{
         font-family: "Jost", sans-serif;
         font-weight: 400;
@@ -52,6 +58,8 @@
         line-height: 13.42px;
         letter-spacing: 0px;
     }
+
+    /* Top bar CTA button */
     #Banner-{{ section.id }} .banner-top .button{
         width: 207px;
         height: 44px;
@@ -59,6 +67,8 @@
         background: #FFF544;
         --border-opacity:none;
     }
+
+    /* Top bar CTA label styling */
     #Banner-{{ section.id }} .banner-top .button .label{
         color: #000000;
         font-family: "Jost";
@@ -70,11 +80,15 @@
         text-transform: uppercase;
         margin-right:18px;
     }
+
+    /* Logo sizing in the top bar */
     #Banner-{{ section.id }} .banner-top .logo{
         width: 151.44406127929688px;
         height: 19px;
         opacity: 1;
     }
+
+    /* Overlay content block inside the banner center */
     #Banner-{{ section.id }} .banner-center .banner-info{
       position:absolute;
       top: 425px;
@@ -83,6 +97,8 @@
       flex-direction:column;
       gap:50px;
     }
+
+    /* Description text in the overlay */
     #Banner-{{ section.id }} .banner-center .banner-info .description{
         width: 483px;
         height: 84px;
@@ -94,6 +110,8 @@
         line-height: 140%;
         letter-spacing: 0px;
     }
+
+    /* Title text in the overlay */
     #Banner-{{ section.id }} .banner-center .banner-info .title{
         width: 459px;
         height: 70px;
@@ -105,6 +123,8 @@
         letter-spacing: 0px;
         margin:0;
     }
+
+    /* CTA button inside the overlay */
     #Banner-{{ section.id }} .banner-center .banner-info .button{
         width: 220px;
         height: 50px;
@@ -112,6 +132,8 @@
         background: #000000;
         --border-opacity:none;
     }
+
+    /* CTA label styling inside the overlay */
     #Banner-{{ section.id }} .banner-center .banner-info .button .label{
         font-family: "Jost";
         color:#ffffff;
@@ -125,6 +147,7 @@
     }
   </style>
 
+  {% comment %} Top bar: optional logo, subtitle, and top CTA button {% endcomment %}
   <div class="banner-top">
     {% if section.settings.logo %}
         <img
@@ -142,6 +165,7 @@
       <div>
         <a class="button" href="{{ section.settings.button_link }}">
           <span class="label">{{ section.settings.button_label | escape }}</span>
+          <!-- Arrow icon for top CTA -->
           <svg xmlns="http://www.w3.org/2000/svg" width="26" height="12" viewBox="0 0 26 12" fill="none">
             <path d="M1.22205 4.80469L0.472046 4.80469L0.472046 6.30469L1.22205 6.30469L1.22205 4.80469ZM25.7524 6.08502C26.0453 5.79213 26.0453 5.31725 25.7524 5.02436L20.9794 0.251388C20.6865 -0.0415053 20.2116 -0.0415053 19.9187 0.251388C19.6259 0.544281 19.6259 1.01916 19.9187 1.31205L24.1614 5.55469L19.9187 9.79733C19.6259 10.0902 19.6259 10.5651 19.9187 10.858C20.2116 11.1509 20.6865 11.1509 20.9794 10.858L25.7524 6.08502ZM1.22205 6.30469L25.222 6.30469L25.222 4.80469L1.22205 4.80469L1.22205 6.30469Z" fill="black"/>
           </svg>
@@ -150,6 +174,7 @@
     {% endif %}
   </div>
 
+  {% comment %} Center banner with background image and overlayed content (title, description, CTA) {% endcomment %}
   <div class="banner-center">
     <div class="banner-info">
       <div class="title">
@@ -169,6 +194,7 @@
               {{ section.settings.banner_button_label }}
             {% endif %}
           </span>
+          <!-- Arrow icon for center CTA -->
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="13" viewBox="0 0 28 13" fill="none">
             <path d="M1.11108 5.74402L0.361084 5.74402L0.361084 7.24402L1.11108 7.24402L1.11108 5.74402ZM27.1487 7.02435C27.4416 6.73146 27.4416 6.25658 27.1487 5.96369L22.3757 1.19072C22.0828 0.897826 21.6079 0.897826 21.315 1.19072C21.0221 1.48361 21.0221 1.95849 21.315 2.25138L25.5577 6.49402L21.315 10.7367C21.0221 11.0296 21.0221 11.5044 21.315 11.7973C21.6079 12.0902 22.0828 12.0902 22.3757 11.7973L27.1487 7.02435ZM1.11108 7.24402L26.6183 7.24402L26.6183 5.74402L1.11108 5.74402L1.11108 7.24402Z" fill="white"/>
           </svg>
@@ -177,12 +203,14 @@
     </div>
   </div>
 
+  {% comment %} Bottom bar showing a single supporting message {% endcomment %}
   <div class="banner-bottom">
     {% if section.settings.bottom_text != blank %}
       <span class="banner-bottom-text">{{ section.settings.bottom_text | escape }}</span>
     {% endif %}
   </div>
 
+  {% comment %} Theme editor schema (must remain valid JSON; do not add comments inside) {% endcomment %}
   {% schema %}
   {
     "name": "Banner",
