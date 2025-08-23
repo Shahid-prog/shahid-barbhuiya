@@ -67,10 +67,31 @@
         background: #FFF544;
         --border-opacity:none;
         color: #000000;
-        animation: bty 0.4s forwards;
+        animation: choose-gift-leave 0.4s forwards;
     }
     #Banner-{{ section.id }} .banner-top .button:hover{
-        animation: ytb 0.4s forwards;
+        animation: choose-gift-hover 0.4s forwards;
+    }
+
+     /* Top bar button effects */
+    @keyframes choose-gift-hover {
+      from {
+          box-shadow: inset 0 0 0 0.01px #FFF544;
+      }
+      to {
+          box-shadow: inset 16em 0 0 0.01px #000000;
+          color: #000;
+      }
+    }
+
+    @keyframes choose-gift-leave {
+        from {
+            box-shadow: inset 16em 0 0 0.01px #000000;
+            color: #fff;
+        }
+        to {
+            box-shadow: inset 0 0 0 0.01px #FFF544;
+        }
     }
 
     /* Top bar CTA label styling */
@@ -157,7 +178,7 @@
         text-transform: uppercase;
     }
 
-    /* Banner button effects */
+    /* CTA button inside overlay effects */
     @keyframes shop-now-hover {
       from {
           box-shadow: inset 0 0 0 0.01px #000000;
