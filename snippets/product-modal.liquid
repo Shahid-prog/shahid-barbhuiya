@@ -42,10 +42,6 @@
     display: block;
 }
 
-body.is-open{
-    overflow:hidden;
-}
-
 #{{ _modal_id }} .overlay {
     position: absolute;
     inset: 0;
@@ -257,6 +253,9 @@ body.is-open{
 .no-disp {
     display:none;
 }
+.no-scroll {
+    overflow:hidden;
+}
 
 @media (max-width: 560px) {
     #{{ _modal_id }} .dialog {
@@ -405,6 +404,7 @@ body.is-open{
       if (e.target.hasAttribute('data-close')) {
         e.preventDefault();
         modal.classList.remove('is-open');
+        document.querySelector('body').classList.remove('no-scroll');
       }
     });
 
@@ -412,6 +412,7 @@ body.is-open{
     window.openProductModal = function(id){
       var m = document.getElementById(id);
       if (m) m.classList.add('is-open');
+      document.querySelector('body').classList.add('no-scroll');
     };
   })();
 </script>
