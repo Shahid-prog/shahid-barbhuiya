@@ -201,9 +201,11 @@
     transform: rotate(-180deg);
 }
 #{{ _modal_id }} .menu {
-    border-top: 1px solid #eee;
+    position: relative;
     max-height: 200px;
     overflow: auto;
+    z-index: 999;
+    background: #fff;
 }
 #{{ _modal_id }} .item {
     padding: 10px 12px;
