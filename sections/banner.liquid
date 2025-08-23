@@ -1,5 +1,6 @@
 <section id="Banner-{{ section.id }}" class="banner-container">
   {{ "banner.css" | asset_url | stylesheet_tag }}
+
   <style>
     /* Center area with background image; overlay content is positioned absolutely */
     /* Note: If the background image doesn't fit, consider background-size/background-position */
@@ -10,6 +11,7 @@
         background-image:url({% if section.settings.image %}{{ section.settings.image | image_url }}{% endif %});
     }
   </style>
+  
   <div>
     {% comment %} Top bar: optional logo, subtitle, and top CTA button {% endcomment %}
     <div class="banner-top">
