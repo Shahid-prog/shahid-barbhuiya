@@ -430,10 +430,30 @@
         var selectedSize = sizeLabelEl ? sizeLabelEl.textContent.trim().toLowerCase() : "";
 
         if (selectedColor === "black" && (selectedSize === "medium" || selectedSize === "m")) {
-        console.log("✅ Black + Medium/M selected");
-        // do something special here before submit
-        // e.preventDefault(); // uncomment if you want to stop the form submit
-        console.log("Soft Winter Jacket is added to cart");
+            console.log("✅ Black + Medium/M selected");
+            // do something special here before submit
+            // e.preventDefault(); // uncomment if you want to stop the form submit
+            console.log("Soft Winter Jacket is added to cart");
+            let formData = {
+                'items': [{
+                'id': 45062533841057,
+                'quantity': 1
+                }]
+            };
+
+            fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+            })
+            .then(response => {
+            return response.json();
+            })
+            .catch((error) => {
+            console.error('Error:', error);
+            });
         } else {
         console.log("ℹ️ Other selection:", selectedColor, selectedSize);
         }
