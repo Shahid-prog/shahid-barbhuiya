@@ -416,11 +416,27 @@
       //document.querySelector('body').classList.add('no-scroll');
     };
 
+    // Check if selected variant options are black and medium
     var form = modal.querySelector('[data-atc-form]');
     if (form) {
     form.addEventListener('submit', function (e) {
         e.preventDefault(); // stop auto submission
         console.log("Custom logic before submitting");
+
+        var activeColor = modal.querySelector('.seg.is-active');
+        var selectedColor = activeColor ? activeColor.getAttribute('data-color').toLowerCase() : "";
+
+        var sizeLabelEl = modal.querySelector('[data-size-label]');
+        var selectedSize = sizeLabelEl ? sizeLabelEl.textContent.trim().toLowerCase() : "";
+
+        if (selectedColor === "black" && (selectedSize === "medium" || selectedSize === "m")) {
+        console.log("✅ Black + Medium/M selected");
+        // do something special here before submit
+        // e.preventDefault(); // uncomment if you want to stop the form submit
+        console.log("Soft Winter Jacket is added to cart");
+        } else {
+        console.log("ℹ️ Other selection:", selectedColor, selectedSize);
+        }
         
         // do your stuff, then submit programmatically:
         form.submit();
