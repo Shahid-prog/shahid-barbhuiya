@@ -342,7 +342,7 @@
 </div>
 
 <script>
-  (async function() {
+  (function() {
     var modal = document.getElementById('{{ _modal_id }}');
     
     if (!modal) return;
@@ -419,7 +419,7 @@
     // Check if selected variant options are black and medium
     var form = modal.querySelector('[data-atc-form]');
     if (form) {
-    form.addEventListener('submit', function (e) {
+    form.addEventListener('submit', async function (e) {
         e.preventDefault(); // stop auto submission
         console.log("Custom logic before submitting");
 
