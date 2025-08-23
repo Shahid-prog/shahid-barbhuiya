@@ -17,15 +17,6 @@
     background-color: #F5F5F5;
 }
 
-/* Center area with background image; overlay content is positioned absolutely */
-/* Note: If the background image doesn't fit, consider background-size/background-position */
-#Banner-{{ section.id }} .banner-center {
-    width:100%;
-    min-height:780px;
-    position:relative;
-    background-image:url({% if section.settings.image %}{{ section.settings.image | image_url }}{% endif %});
-}
-
 /* Bottom bar with supporting text */
 #Banner-{{ section.id }} .banner-bottom {
     width:100%;
