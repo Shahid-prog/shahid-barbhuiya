@@ -404,7 +404,7 @@
       if (e.target.hasAttribute('data-close')) {
         e.preventDefault();
         modal.classList.remove('is-open');
-        document.querySelector('body').classList.remove('no-scroll');
+        //document.querySelector('body').classList.remove('no-scroll');
       }
     });
 
@@ -412,7 +412,7 @@
     window.openProductModal = function(id){
       var m = document.getElementById(id);
       if (m) m.classList.add('is-open');
-      document.querySelector('body').classList.add('no-scroll');
+      //document.querySelector('body').classList.add('no-scroll');
     };
   })();
 </script>
