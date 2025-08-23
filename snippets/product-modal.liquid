@@ -36,16 +36,19 @@
     display: none;
     position: fixed;
     inset: 0;
-    z-index: 9999;
+    z-index: 2147483647;
 }
 #{{ _modal_id }}.is-open {
     display: block;
 }
 
 #{{ _modal_id }} .overlay {
+    display: block;             /* override any global display:none */
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,.80);
+    background: rgba(0,0,0,.50);
+    pointer-events: auto;       /* override any global pointer-events:none */
+    z-index: 0;                 /* sit under the dialog */
 }
 #{{ _modal_id }} .dialog {
     position: relative;
@@ -56,6 +59,7 @@
     border-radius: 6px;
     box-shadow: 0 12px 24px rgba(0,0,0,.2);
     overflow: hidden;
+    z-index: 1; 
 }
 #{{ _modal_id }} .close {
     position: absolute;
