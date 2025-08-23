@@ -449,7 +449,7 @@
                 },
                 body: JSON.stringify(formData)
                 })
-                let data = response.json();
+                let data = await response.json();
                 console.log(data);
             }catch(error){
                 console.error('Error:', error);
@@ -459,7 +459,7 @@
         }
         
         // do your stuff, then submit programmatically:
-        //form.submit();
+        form.submit();
     });
     }
 
