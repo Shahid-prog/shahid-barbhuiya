@@ -346,8 +346,6 @@
     var modal = document.getElementById('{{ _modal_id }}');
     var addToCart = document.querySelector('.btn');
     
-    alert(addToCart);
-    
     if (!modal) return;
 
     // Variants for matching selection to a variant id
@@ -418,6 +416,10 @@
       if (m) m.classList.add('is-open');
       //document.querySelector('body').classList.add('no-scroll');
     };
+
+    addToCart.addEventListener('click',function(e){
+        alert("I am working");
+    })
 
   })();
 </script>
