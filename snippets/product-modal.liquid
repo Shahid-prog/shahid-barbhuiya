@@ -416,8 +416,16 @@
       //document.querySelector('body').classList.add('no-scroll');
     };
 
-                    document.querySelector('body.btn').addEventListener('click',function(e){
-                    alert("I am working");
-                })
+    var form = modal.querySelector('[data-atc-form]');
+    if (form) {
+    form.addEventListener('submit', function (e) {
+        e.preventDefault(); // stop auto submission
+        console.log("Custom logic before submitting");
+        
+        // do your stuff, then submit programmatically:
+        form.submit();
+    });
+    }
+
   })();
 </script>
