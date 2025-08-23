@@ -198,69 +198,76 @@
             box-shadow: inset 0 0 0 0.01px #000000;
         }
     }
+
+    @media screen and (min-width: 480px) {
+      .no-m{
+        display:none;
+      }
+    }
   </style>
+  <div class="no-m">
+    {% comment %} Top bar: optional logo, subtitle, and top CTA button {% endcomment %}
+    <div class="banner-top">
+      {% if section.settings.logo %}
+          <img
+            class="logo"
+            src="{{ section.settings.logo | image_url }}"
+            alt="{{ section.settings.logo.alt | escape }}"
+            loading="lazy">
+      {% endif %}
 
-  {% comment %} Top bar: optional logo, subtitle, and top CTA button {% endcomment %}
-  <div class="banner-top">
-    {% if section.settings.logo %}
-        <img
-          class="logo"
-          src="{{ section.settings.logo | image_url }}"
-          alt="{{ section.settings.logo.alt | escape }}"
-          loading="lazy">
-    {% endif %}
+      {% if section.settings.subtitle != blank %}
+        <div><span class="banner-top-text">{{ section.settings.subtitle | escape }}</span></div>
+      {% endif %}
 
-    {% if section.settings.subtitle != blank %}
-      <div><span class="banner-top-text">{{ section.settings.subtitle | escape }}</span></div>
-    {% endif %}
+      {% if section.settings.button_label != blank %}
+        <div>
+          <a class="button" href="{{ section.settings.button_link }}">
+            <span class="label">{{ section.settings.button_label | escape }}</span>
+            <!-- Arrow icon for top CTA -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="12" viewBox="0 0 26 12" fill="none">
+              <path d="M1.22205 4.80469L0.472046 4.80469L0.472046 6.30469L1.22205 6.30469L1.22205 4.80469ZM25.7524 6.08502C26.0453 5.79213 26.0453 5.31725 25.7524 5.02436L20.9794 0.251388C20.6865 -0.0415053 20.2116 -0.0415053 19.9187 0.251388C19.6259 0.544281 19.6259 1.01916 19.9187 1.31205L24.1614 5.55469L19.9187 9.79733C19.6259 10.0902 19.6259 10.5651 19.9187 10.858C20.2116 11.1509 20.6865 11.1509 20.9794 10.858L25.7524 6.08502ZM1.22205 6.30469L25.222 6.30469L25.222 4.80469L1.22205 4.80469L1.22205 6.30469Z" fill="currentcolor"/>
+            </svg>
+          </a>
+        </div>
+      {% endif %}
+    </div>
 
-    {% if section.settings.button_label != blank %}
-      <div>
-        <a class="button" href="{{ section.settings.button_link }}">
-          <span class="label">{{ section.settings.button_label | escape }}</span>
-          <!-- Arrow icon for top CTA -->
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="12" viewBox="0 0 26 12" fill="none">
-            <path d="M1.22205 4.80469L0.472046 4.80469L0.472046 6.30469L1.22205 6.30469L1.22205 4.80469ZM25.7524 6.08502C26.0453 5.79213 26.0453 5.31725 25.7524 5.02436L20.9794 0.251388C20.6865 -0.0415053 20.2116 -0.0415053 19.9187 0.251388C19.6259 0.544281 19.6259 1.01916 19.9187 1.31205L24.1614 5.55469L19.9187 9.79733C19.6259 10.0902 19.6259 10.5651 19.9187 10.858C20.2116 11.1509 20.6865 11.1509 20.9794 10.858L25.7524 6.08502ZM1.22205 6.30469L25.222 6.30469L25.222 4.80469L1.22205 4.80469L1.22205 6.30469Z" fill="currentcolor"/>
-          </svg>
-        </a>
-      </div>
-    {% endif %}
-  </div>
-
-  {% comment %} Center banner with background image and overlayed content (title, description, CTA) {% endcomment %}
-  <div class="banner-center">
-    <div class="banner-info">
-      <div class="title">
-        {% if section.settings.banner_title != blank %}
-          {{ section.settings.banner_title }}
-        {% endif %}
-      </div>
-      <div class="description">
-        {% if section.settings.banner_description != blank %}
-          {{ section.settings.banner_description }}
-        {% endif %}
-      </div>
-      <div>
-        <a class="button" href="">
-          <span class="label">
-            {% if section.settings.banner_button_label != blank %}
-              {{ section.settings.banner_button_label }}
-            {% endif %}
-          </span>
-          <!-- Arrow icon for center CTA -->
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="13" viewBox="0 0 28 13" fill="none">
-            <path d="M1.11108 5.74402L0.361084 5.74402L0.361084 7.24402L1.11108 7.24402L1.11108 5.74402ZM27.1487 7.02435C27.4416 6.73146 27.4416 6.25658 27.1487 5.96369L22.3757 1.19072C22.0828 0.897826 21.6079 0.897826 21.315 1.19072C21.0221 1.48361 21.0221 1.95849 21.315 2.25138L25.5577 6.49402L21.315 10.7367C21.0221 11.0296 21.0221 11.5044 21.315 11.7973C21.6079 12.0902 22.0828 12.0902 22.3757 11.7973L27.1487 7.02435ZM1.11108 7.24402L26.6183 7.24402L26.6183 5.74402L1.11108 5.74402L1.11108 7.24402Z" fill="currentcolor"/>
-          </svg>
-        </a>
+    {% comment %} Center banner with background image and overlayed content (title, description, CTA) {% endcomment %}
+    <div class="banner-center">
+      <div class="banner-info">
+        <div class="title">
+          {% if section.settings.banner_title != blank %}
+            {{ section.settings.banner_title }}
+          {% endif %}
+        </div>
+        <div class="description">
+          {% if section.settings.banner_description != blank %}
+            {{ section.settings.banner_description }}
+          {% endif %}
+        </div>
+        <div>
+          <a class="button" href="">
+            <span class="label">
+              {% if section.settings.banner_button_label != blank %}
+                {{ section.settings.banner_button_label }}
+              {% endif %}
+            </span>
+            <!-- Arrow icon for center CTA -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="13" viewBox="0 0 28 13" fill="none">
+              <path d="M1.11108 5.74402L0.361084 5.74402L0.361084 7.24402L1.11108 7.24402L1.11108 5.74402ZM27.1487 7.02435C27.4416 6.73146 27.4416 6.25658 27.1487 5.96369L22.3757 1.19072C22.0828 0.897826 21.6079 0.897826 21.315 1.19072C21.0221 1.48361 21.0221 1.95849 21.315 2.25138L25.5577 6.49402L21.315 10.7367C21.0221 11.0296 21.0221 11.5044 21.315 11.7973C21.6079 12.0902 22.0828 12.0902 22.3757 11.7973L27.1487 7.02435ZM1.11108 7.24402L26.6183 7.24402L26.6183 5.74402L1.11108 5.74402L1.11108 7.24402Z" fill="currentcolor"/>
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
 
-  {% comment %} Bottom bar showing a single supporting message {% endcomment %}
-  <div class="banner-bottom">
-    {% if section.settings.bottom_text != blank %}
-      <span class="banner-bottom-text">{{ section.settings.bottom_text | escape }}</span>
-    {% endif %}
+    {% comment %} Bottom bar showing a single supporting message {% endcomment %}
+    <div class="banner-bottom">
+      {% if section.settings.bottom_text != blank %}
+        <span class="banner-bottom-text">{{ section.settings.bottom_text | escape }}</span>
+      {% endif %}
+    </div>
   </div>
 
   {% comment %} Theme editor schema (must remain valid JSON; do not add comments inside) {% endcomment %}
