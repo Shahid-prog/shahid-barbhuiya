@@ -344,7 +344,7 @@
 <script>
   (function() {
     var modal = document.getElementById('{{ _modal_id }}');
-    var addToCartBtn = document.querySelector('.btn')
+    
     if (!modal) return;
 
     // Variants for matching selection to a variant id
@@ -416,8 +416,5 @@
       //document.querySelector('body').classList.add('no-scroll');
     };
 
-    addToCartBtn.addEventListener('click',function(e){
-        alert("I am working");
-    })
   })();
 </script>
