@@ -1,0 +1,473 @@
+{%- comment -%}
+  Snippet: product-modal.liquid
+  Usage: {% render 'product-modal', product: product %}
+  - Accepts: product (Shopify product object)
+  - Simple modal with:
+    1) Top row = image (left) + title/price/description (right)
+    2) Color selector (vertical swatch + name, active in black)
+    3) Size selector (dropdown, arrow flips on open)
+    4) Add to cart button (submits selected variant)
+{%- endcomment -%}
+
+{%- assign _modal_id = 'product-modal-' | append: product.id -%}
+
+{%- comment -%} Find option positions and values for Color/Colour and Size {%- endcomment -%}
+{%- assign color_index = -1 -%}
+{%- assign size_index = -1 -%}
+{%- assign color_values = blank -%}
+{%- assign size_values = blank -%}
+{%- for opt in product.options_with_values -%}
+  {%- assign nm = opt.name | downcase -%}
+  {%- if color_index == -1 -%}
+    {%- if nm contains 'color' or nm contains 'colour' -%}
+        {%- assign color_index = forloop.index0 -%}
+        {%- assign color_values = opt.values -%}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if size_index == -1 and nm contains 'size' -%}
+    {%- assign size_index = forloop.index0 -%}
+    {%- assign size_values = opt.values -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<style>
+    /* Scope to this modal instance */
+    #{{ _modal_id }} {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+    }
+    #{{ _modal_id }}.is-open {
+        display: block;
+    }
+
+    #{{ _modal_id }} .overlay {
+        display: block;             /* override any global display:none */
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,.30);
+        pointer-events: auto;       /* override any global pointer-events:none */
+        z-index: 0;                 /* sit under the dialog */
+    }
+    #{{ _modal_id }} .dialog {
+        position: relative;
+        width: 311px;
+        /* height: 447px; */
+        margin: 60px auto;
+        background: #fff;
+        /* border-radius: 6px; */
+        box-shadow: 0 12px 24px rgba(0,0,0,.2);
+        overflow: hidden;
+        z-index: 1; 
+    }
+    #{{ _modal_id }} .close {
+        position: absolute;
+        top: 8px;
+        right: 10px;
+        background: transparent;
+        border: 0;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    /* Top row: image left, info right */
+    #{{ _modal_id }} .content {
+        padding: 16px;
+        margin-top:16px;
+    }
+    #{{ _modal_id }} .top {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+        width: 100%;
+        height: 140px;
+    }
+    #{{ _modal_id }} .thumb {
+        min-width: 120px;
+        overflow: hidden;
+        background: #f2f2f2;
+    }
+    #{{ _modal_id }} .thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    #{{ _modal_id }} .title {
+        margin-top:13px;
+        margin-bottom:20px;
+        font-family: "Jost";
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 120%;
+        letter-spacing: 0px;
+    }
+    #{{ _modal_id }} .price {
+        margin-bottom: 12px;
+        font-family: "Lustria";
+        font-weight: 400;
+        font-style: normal;
+        font-size: 16px;
+        line-height: 120%;
+        letter-spacing: 0px;
+    }
+    #{{ _modal_id }} .compare {
+        margin-left: 8px;
+        text-decoration: line-through;
+        opacity: .7;
+    }
+    #{{ _modal_id }} .desc {
+        color: #444;
+        font-family: "Jost";
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 110.00000000000001%;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Color segmented buttons with vertical swatch */
+    #{{ _modal_id }} .label {
+        margin: 12px 0 6px;
+        font-size: 13px;
+        color: #000;
+        font-family: Jost;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 14px;
+        line-height: 130%;
+    }
+    #{{ _modal_id }} .segments {
+        display: flex;
+        width:100%;
+        height:40.44px;
+    }
+    #{{ _modal_id }} .seg {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 40.44px;
+        border: 0.5px solid #000;
+        background: #fff;
+        cursor: pointer;
+        width: 50%;
+        padding: 0;
+        font-family: Jost;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 18px;
+        line-height: 100%;
+        text-transform: capitalize;
+    }
+    #{{ _modal_id }} .seg .swatch {
+        width: 5.807142734527588px;
+        height: 40.441322326660156px;
+    }
+    #{{ _modal_id }} .seg.is-active {
+        background: #111;
+        color: #fff;
+        border-color: #111;
+    }
+
+    /* Size dropdown (details) with arrow rotation */
+    #{{ _modal_id }} details.select {
+        --inputs-border-width: 0.5px;
+        display: flex;
+        flex-direction: column;
+        height:40.44px;
+    }
+    #{{ _modal_id }} details.select summary {
+        list-style: none;
+        padding: 10px 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+    }
+    #{{ _modal_id }} details.select summary span{
+        order: 0px;
+        font-family: Jost;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 16px;
+        line-height: 100%;
+    }
+    #{{ _modal_id }} details.select summary::-webkit-details-marker {
+        display: none;
+    }
+    #{{ _modal_id }} .chev {
+        transition: transform .2s;
+    }
+    #{{ _modal_id }} details[open] .chev {
+        transform: rotate(-180deg);
+    }
+    #{{ _modal_id }} .menu {
+        position: relative;
+        max-height: 200px;
+        overflow: auto;
+        z-index: 999;
+        background: #fff;
+        border:0.5px solid #000;
+    }
+    #{{ _modal_id }} .item {
+        padding: 10px 12px;
+        cursor: pointer;
+        font-family: Jost;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 16px;
+        line-height: 100%;
+        text-align: center;
+        transition: background-color 0.3s ease;
+    }
+    #{{ _modal_id }} .item:hover {
+        background: #000000;
+        color:#ffffff;
+    }
+
+    /* Add to cart */
+    #{{ _modal_id }} .actions {
+        margin-top: 14px;
+    }
+    #{{ _modal_id }} .btn {
+        width: 100%;
+        height:45px;
+        padding: 12px;
+        background: #111;
+        color: #fff;
+        border: 0;
+        cursor: pointer;
+        margin-top:51px;
+        margin-bottom:12px;
+    }
+    #{{ _modal_id }} .btn span.label{
+        margin:28.08px;
+        font-family: Jost;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 16px;
+        line-height: 20.48px;
+        letter-spacing: 0px;
+        text-align: center;
+        text-transform: uppercase;
+        color:#fff;
+    }
+    .no-disp {
+        display:none;
+    }
+    .no-scroll {
+        overflow:hidden;
+    }
+
+    @media (max-width: 560px) {
+        #{{ _modal_id }} .dialog {
+            margin: 32px auto;
+        }
+    }
+</style>
+
+<div class="modal" id="{{ _modal_id }}">
+  <div class="overlay" data-close></div>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="{{ _modal_id }}-title">
+    <button class="close" type="button" aria-label="Close" data-close>
+       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" pointer-events="none">
+        <path d="M5.0376 4.94354L13.5229 13.4288" stroke="black" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
+        <path d="M5.0376 13.4285L13.5229 4.94325" stroke="black" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
+       </svg>
+    </button>
+
+    <div class="content">
+      {%- comment -%} 1) Top row with image + meta {%- endcomment -%}
+      <div class="top">
+        <div class="thumb">
+          {%- if product.featured_image -%}
+            <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.featured_image.alt | escape }}">
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+        <div>
+          <h3 class="title" id="{{ _modal_id }}-title">{{ product.title }}</h3>
+          <p class="price">
+            {{ product.price | money }}
+            {%- if product.compare_at_price > product.price -%}
+              <span class="compare">{{ product.compare_at_price | money }}</span>
+            {%- endif -%}
+          </p>
+          <p class="desc">{{ product.description | strip_html | truncate: 140 }}</p>
+        </div>
+      </div>
+
+      {%- comment -%} 2) Color selector (if color option exists) {%- endcomment -%}
+      {%- if color_index != -1 and color_values != blank -%}
+        <div class="label">Color</div>
+        <div class="segments" data-color-group>
+          {%- for val in color_values -%}
+            <button class="seg{% if forloop.first %} is-active{% endif %}" type="button" data-color="{{ val | escape }}">
+              <span class="swatch" style="background: {{ val | escape }};"></span>
+              <span>{{ val }}</span>
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} 3) Size selector (if size option exists) {%- endcomment -%}
+      {%- if size_index != -1 and size_values != blank -%}
+        <div class="label">Size</div>
+        <details class="select" data-size-select>
+          <summary>
+            <span data-size-label>Choose your size</span>
+            <svg class="chev" xmlns="http://www.w3.org/2000/svg" width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true">
+              <path d="M1 3l7 6 7-6" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            </svg>
+          </summary>
+          <div class="menu">
+            {%- for val in size_values -%}
+              <div class="item" data-size="{{ val | escape }}">{{ val }}</div>
+            {%- endfor -%}
+          </div>
+        </details>
+      {%- endif -%}
+
+      {%- comment -%} 4) Add to cart button (updates variant id based on selections) {%- endcomment -%}
+      <form method="post" action="/cart/add" class="actions" data-atc-form>
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button class="btn">
+            <span class="label">Add to cart</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="12" viewBox="0 0 36 12" fill="none">
+                <path d="M1.4093 5.25L0.659302 5.25L0.659302 6.75L1.4093 6.75L1.4093 5.25ZM35.6391 6.53033C35.932 6.23744 35.932 5.76257 35.6391 5.46967L30.8661 0.696701C30.5733 0.403808 30.0984 0.403808 29.8055 0.696701C29.5126 0.989594 29.5126 1.46447 29.8055 1.75736L34.0481 6L29.8055 10.2426C29.5126 10.5355 29.5126 11.0104 29.8055 11.3033C30.0984 11.5962 30.5732 11.5962 30.8661 11.3033L35.6391 6.53033ZM1.4093 6.75L35.1088 6.75L35.1088 5.25L1.4093 5.25L1.4093 6.75Z" fill="currentcolor"/>
+            </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var modal = document.getElementById('{{ _modal_id }}');
+    
+    if (!modal) return;
+
+    // Variants for matching selection to a variant id
+    var variants = {{ product.variants | json }};
+    var colorIndex = {{ color_index }};
+    var sizeIndex  = {{ size_index }};
+
+    // Current option selections (start with first available variant)
+    var current = (function() {
+      var v = variants.find(function(x){ return x.available; }) || variants[0];
+      return v ? v.options.slice() : [];
+    })();
+
+    // Helper: find variant id that matches current selections
+    function findVariantId() {
+      var match = variants.find(function(v){
+        return v.options.every(function(opt, i){
+          return !current[i] || current[i] === opt;
+        });
+      });
+      return match ? match.id : (variants[0] && variants[0].id);
+    }
+    // Update hidden input with matching variant
+    function updateVariant() {
+      var input = modal.querySelector('[name="id"]');
+      if (input) input.value = findVariantId();
+    }
+    updateVariant();
+
+    // Color click: mark active and update selection
+    var colorGroup = modal.querySelector('[data-color-group]');
+    if (colorGroup && colorIndex >= 0) {
+      colorGroup.addEventListener('click', function(e){
+        var btn = e.target.closest('.seg');
+        if (!btn) return;
+        colorGroup.querySelectorAll('.seg').forEach(function(b){ b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        current[colorIndex] = btn.getAttribute('data-color');
+        updateVariant();
+      });
+    }
+
+    // Size menu: set label and selection
+    var sel = modal.querySelector('[data-size-select]');
+    if (sel && sizeIndex >= 0) {
+      sel.addEventListener('click', function(e){
+        var item = e.target.closest('.item');
+        if (!item) return;
+        sel.querySelector('[data-size-label]').textContent = item.textContent.trim();
+        current[sizeIndex] = item.getAttribute('data-size');
+        sel.removeAttribute('open');
+        updateVariant();
+      });
+    }
+
+    // Close handlers
+    modal.addEventListener('click', function(e){
+      if (e.target.hasAttribute('data-close')) {
+        e.preventDefault();
+        modal.classList.remove('is-open');
+        //document.querySelector('body').classList.remove('no-scroll');
+      }
+    });
+
+    // Public open helper: window.openProductModal('<id>')
+    window.openProductModal = function(id){
+      var m = document.getElementById(id);
+      if (m) m.classList.add('is-open');
+      //document.querySelector('body').classList.add('no-scroll');
+    };
+
+    // Check if selected variant options are black and medium
+    var form = modal.querySelector('[data-atc-form]');
+    if (form) {
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault(); // stop auto submission
+        console.log("Custom logic before submitting");
+
+        var activeColor = modal.querySelector('.seg.is-active');
+        var selectedColor = activeColor ? activeColor.getAttribute('data-color').toLowerCase() : "";
+
+        var sizeLabelEl = modal.querySelector('[data-size-label]');
+        var selectedSize = sizeLabelEl ? sizeLabelEl.textContent.trim().toLowerCase() : "";
+
+        if (selectedColor === "black" && (selectedSize === "medium" || selectedSize === "m")) {
+            console.log("✅ Black + Medium/M selected");
+            console.log("Soft Winter Jacket is added to cart");
+
+            // Add Soft Winter Jacket to cart.
+            let formData = {
+                'items': [{
+                'id': 45062533841057,
+                'quantity': 1
+                }]
+            };
+
+            try{
+                let response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+                })
+                let data = await response.json();
+                console.log(data);
+            }catch(error){
+                console.error('Error:', error);
+            };
+        } else {
+        console.log("ℹ️ Other selection:", selectedColor, selectedSize);
+        }
+        
+        // do your stuff, then submit programmatically:
+        form.submit();
+    });
+    }
+
+  })();
+</script>

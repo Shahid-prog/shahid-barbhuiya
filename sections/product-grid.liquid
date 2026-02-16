@@ -1,0 +1,137 @@
+<section id="Grid-{{ section.id }}" class="product-grid-section">
+  <style>
+     #Grid-{{ section.id }}{
+        width:1440px;
+        padding:51.5px;
+     }
+     #Grid-{{ section.id }} .grid {
+        width: 1339px;
+        height: 908px;
+        display: grid;
+        grid-template-columns: repeat(3, 433px);
+        gap: 20px;
+    }
+    #Grid-{{ section.id }} .grid-item {
+        width: 433px;
+        height: 444px;
+    }
+    #Grid-{{ section.id }} .card-media {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #f6f6f6;
+    }
+    #Grid-{{ section.id }} .card-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    #Grid-{{ section.id }} .title {
+        font-family: "Lustria",serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 36px;
+        line-height: 120%;
+        letter-spacing: 0px;
+    }
+  </style>
+  <div class="title"><span>Tisso vison in the wild</span></div>
+  <div class="grid" \>
+    {%- for block in section.blocks -%}
+      {%- assign product = block.settings.product -%}
+      {%- if product -%}
+        <div class="grid-item" data-product-id="{{ product.id }}">
+          <a href="{{ product.url }}">
+            <div class="card-media">
+              {%- if product.featured_image -%}
+                <img
+                  src="{{ product.featured_image | image_url }}"
+                  alt="{{ product.featured_image.alt | escape }}"
+                  loading="lazy">
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+          </a>
+        </div>
+
+        {% render 'product-modal', product: product %}
+
+        {% comment %}
+            1.Adds a data-product-id attribute to identify the grid item
+            2.Prevents the default link behavior when clicking the grid item
+            3.Opens the corresponding modal instead
+            4.Handles closing the modal via overlay click, close button, or Escape key
+            5.Uses an IIFE (Immediately Invoked Function Expression) to avoid global scope pollution
+        {% endcomment %}
+        <script>
+            (function() {
+                // Find the grid item and modal for this product
+                var gridItem = document.querySelector('[data-product-id="{{ product.id }}"]');
+                var modal = document.getElementById('product-modal-{{ product.id }}');
+                
+                if (!gridItem || !modal) return;
+                
+                // Prevent default link behavior and open modal instead
+                gridItem.addEventListener('click', function(e) {
+                e.preventDefault();
+                modal.classList.add('is-open');
+                document.querySelector('body').classList.add('no-scroll');
+                });
+                
+                // Close modal when clicking overlay or close button
+                modal.addEventListener('click', function(e) {
+                if (e.target.classList.contains('overlay') || e.target.hasAttribute('data-close')) {
+                    e.preventDefault();
+                    modal.classList.remove('is-open');
+                    document.querySelector('body').classList.remove('no-scroll');
+                }
+                });
+                
+                // Close modal with Escape key
+                document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+                    modal.classList.remove('is-open');
+                }
+                });
+            })();
+            </script>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {% schema %}
+{
+  "name": "Product grid",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select product"
+        }
+      ]
+    }
+  ],
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product grid",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+</section>
